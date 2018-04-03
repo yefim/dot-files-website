@@ -1,0 +1,20 @@
+{
+  "name": "dot-files-website",
+  "version": "1.0.0",
+  "description": "Community driven dot-files collab",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "start": "webpack -d -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yefim/dot-files-website.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yefim/dot-files-website/issues"
+  },
+  "homepage": "https://github.com/yefim/dot-files-website#readme"
+}
