@@ -4,6 +4,7 @@
   "description": "Community driven dot-files collab",
   "dependencies": {},
   "devDependencies": {
+    "mini-css-extract-plugin": "^0.4.0",
     "webpack": "^4.4.1",
     "webpack-cli": "^2.0.13"
   },
