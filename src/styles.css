@@ -70,6 +70,12 @@ footer {
   padding: 20px;
 }
 
+.posts {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
 .post {
   display: block;
   margin: 0 0 20px 0;
@@ -79,15 +85,16 @@ footer {
   position: relative;
 }
 
-.posts {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.post .link {
+  width: 100%;
+  display: flex;
 }
 
-.post-link {
-  width: 100%;
-  display: block;
+.post .tag {
+  margin: 0 0 0 12px;
+  color: white;
+  background: #222;
+  padding: 0 4px;
 }
 
 .post .github-star {

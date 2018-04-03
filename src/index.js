@@ -4,10 +4,13 @@ import React from 'react';
 import {render} from 'react-dom';
 import {BrowserRouter, Route, Link} from 'react-router-dom'
 
-const Post = ({username, repo, stars}) => {
+const Post = ({username, repo, stars, tags = []}) => {
   return (
     <li className="post">
-      <Link className="post-link" to={`/::/${username}/${repo}`}>{username}&apos;s dotfiles</Link>
+      <Link className="link" to={`/::/${username}/${repo}`}>
+        <span>{username}&apos;s dotfiles</span>
+        {tags.map((tag, i) => <p className="tag">{tag}</p>)}
+      </Link>
       <a className="github-star" href={`https://github.com/${username}/${repo}`}>Star ({stars})</a>
     </li>
   );
@@ -25,8 +28,8 @@ class HotPage extends React.Component {
       this.setState({
         posts: [
           {username: 'mathiasbynens', repo: 'dotfiles', stars: 18734, timestamp: 567},
-          {username: 'thoughtbot', repo: 'dotfiles', stars: 4823, timestamp: 123},
-          {username: 'yefim', repo: 'dotfiles', stars: 0, timestamp: 234}
+          {username: 'thoughtbot', repo: 'dotfiles', stars: 4823, timestamp: 123, tags: ['zshrc', 'vimrc']},
+          {username: 'yefim', repo: 'dotfiles', stars: 0, timestamp: 234, tags: ['vimrc']}
         ]
       });
     }, 300);
