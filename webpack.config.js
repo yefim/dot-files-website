@@ -10,7 +10,9 @@ module.exports = {
     new HtmlWebPackPlugin({
       template: 'src/index.html'
     }),
-    new MiniCssExtractPlugin(),
+    new MiniCssExtractPlugin({
+      filename: '[name].[contenthash].css'
+    }),
     new webpack.HashedModuleIdsPlugin()
   ],
   module: {
