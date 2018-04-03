@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "Community driven dot-files collab",
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "webpack": "^4.4.1",
+    "webpack-cli": "^2.0.13"
+  },
   "scripts": {
     "start": "webpack -d -w"
   },
