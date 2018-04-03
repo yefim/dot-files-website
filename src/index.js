@@ -9,52 +9,31 @@ const Post = ({username, repo, stars, tags = []}) => {
     <li className="post">
       <Link className="link" to={`/::/${username}/${repo}`}>
         <span>{username}&apos;s dotfiles</span>
-        {tags.map((tag, i) => <p className="tag">{tag}</p>)}
+        {tags.map((tag, i) => <p key={`tag-${i}`} className="tag">{tag}</p>)}
       </Link>
       <a className="github-star" href={`https://github.com/${username}/${repo}`}>Star ({stars})</a>
     </li>
   );
 };
 
-class HotPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {posts: null};
-  }
-
+class Page extends React.Component {
   // TODO: move to suspense
   componentDidMount() {
-    setTimeout(() => {
-      this.setState({
-        posts: [
-          {username: 'mathiasbynens', repo: 'dotfiles', stars: 18734, timestamp: 567},
-          {username: 'thoughtbot', repo: 'dotfiles', stars: 4823, timestamp: 123, tags: ['zshrc', 'vimrc']},
-          {username: 'yefim', repo: 'dotfiles', stars: 0, timestamp: 234, tags: ['vimrc']}
-        ]
-      });
-    }, 300);
+    this.props.loadPosts(this.props.name);
   }
 
   render() {
-    const {posts} = this.state;
+    const {name, posts} = this.props;
 
     return (
       <div>
-        <h1>All the hot dot-files</h1>
+        <h1>All the {name} dot-files</h1>
         {
           !!posts
             ? <ul className="posts">{posts.map((post, i) => <Post key={'' + i} {...post} />)}</ul>
             : <p>Loading...</p>
         }
       </div>
-    );
-  }
-}
-
-class NewPage extends React.Component {
-  render() {
-    return (
-      <p>All the newly submitted dot-files</p>
     );
   }
 }
@@ -89,6 +68,32 @@ set expandtab`}
 }
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      hot: null,
+      newest: null,
+      random: null
+    };
+  }
+
+  loadPosts(name) {
+    if (this.state[name]) {
+      return;
+    }
+
+    setTimeout(() => {
+      this.setState({
+        [name]: [
+          {username: 'mathiasbynens', repo: 'dotfiles', stars: 18734, timestamp: 567},
+          {username: 'thoughtbot', repo: 'dotfiles', stars: 4823, timestamp: 123, tags: ['zshrc', 'vimrc']},
+          {username: 'yefim', repo: 'dotfiles', stars: 0, timestamp: 234, tags: ['vimrc']}
+        ]
+      });
+    }, 300);
+  }
+
   render() {
     return [
       <header key="header">
@@ -103,9 +108,9 @@ class App extends React.Component {
         </nav>
       </header>,
       <main key="main">
-        <Route exact path="/" component={HotPage} />
-        <Route path="/new" component={NewPage} />
-        <Route path="/random" component={NewPage} />
+        <Route exact path="/" render={props => <Page {...props} name="hot" loadPosts={this.loadPosts.bind(this)} posts={this.state.hot} />} />
+        <Route path="/new" render={props => <Page {...props} name="newest" loadPosts={this.loadPosts.bind(this)} posts={this.state.newest} />} />
+        <Route path="/random" render={props => <Page {...props} name="random" loadPosts={this.loadPosts.bind(this)} posts={this.state.random} />} />
         <Route path="/::/:username/:repo" component={PostPage} />
       </main>,
       <footer key="footer">
