@@ -4,7 +4,8 @@
   "description": "Community driven dot-files collab",
   "dependencies": {
     "react": "^16.3.0",
-    "react-dom": "^16.3.0"
+    "react-dom": "^16.3.0",
+    "react-router-dom": "^4.2.2"
   },
   "devDependencies": {
     "babel-loader": "^7.1.4",

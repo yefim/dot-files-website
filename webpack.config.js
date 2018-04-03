@@ -41,5 +41,8 @@ module.exports = {
   output: {
     filename: '[name].[chunkhash].js',
     path: path.resolve(__dirname, 'dist')
+  },
+  devServer: {
+    historyApiFallback: true
   }
 };
