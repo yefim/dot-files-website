@@ -8,7 +8,8 @@
     "webpack-cli": "^2.0.13"
   },
   "scripts": {
-    "start": "webpack -d -w"
+    "start": "webpack -d -w",
+    "build": "webpack -p"
   },
   "repository": {
     "type": "git",
