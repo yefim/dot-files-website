@@ -2,9 +2,14 @@
   "name": "dot-files-website",
   "version": "1.0.0",
   "description": "Community driven dot-files collab",
-  "dependencies": {},
+  "dependencies": {
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0"
+  },
   "devDependencies": {
     "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
     "clean-webpack-plugin": "^0.1.19",
     "css-loader": "^0.28.11",
     "html-loader": "^0.5.5",
