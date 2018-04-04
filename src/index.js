@@ -49,9 +49,25 @@ class App extends React.Component {
       </header>,
       <main key="main">
         <Switch>
-          <Route exact path="/" render={props => <ListPage {...props} name="hot" loadPosts={this.loadPosts.bind(this)} posts={this.state.hot} />} />
-          <Route path="/new" render={props => <ListPage {...props} name="newest" loadPosts={this.loadPosts.bind(this)} posts={this.state.newest} />} />
-          <Route path="/random" render={props => <ListPage {...props} name="random" loadPosts={this.loadPosts.bind(this)} posts={this.state.random} />} />
+          <Route
+            exact
+            path="/"
+            render={(props) => {
+              return (<ListPage {...props} name="hot" loadPosts={this.loadPosts.bind(this)} posts={this.state.hot} />);
+            }}
+          />
+          <Route
+            path="/new"
+            render={(props) => {
+              return (<ListPage {...props} name="newest" loadPosts={this.loadPosts.bind(this)} posts={this.state.newest} />);
+            }}
+          />
+          <Route
+            path="/random"
+            render={(props) => {
+              return (<ListPage {...props} name="random" loadPosts={this.loadPosts.bind(this)} posts={this.state.random} />);
+            }}
+          />
           <Route path="/::/:username/:repo" component={ItemPage} />
         </Switch>
       </main>,
