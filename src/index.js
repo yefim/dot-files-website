@@ -2,70 +2,10 @@ import './styles.css';
 
 import React from 'react';
 import {render} from 'react-dom';
-import {BrowserRouter, Route, Link} from 'react-router-dom'
+import {BrowserRouter, Route, Switch, Link} from 'react-router-dom'
 
-const Post = ({username, repo, stars, tags = []}) => {
-  return (
-    <li className="post">
-      <Link className="link" to={`/::/${username}/${repo}`}>
-        <span>{username}&apos;s dotfiles</span>
-        {tags.map((tag, i) => <p key={`tag-${i}`} className="tag">{tag}</p>)}
-      </Link>
-      <a className="github-star" href={`https://github.com/${username}/${repo}`}>Star ({stars})</a>
-    </li>
-  );
-};
-
-class Page extends React.Component {
-  // TODO: move to suspense
-  componentDidMount() {
-    this.props.loadPosts(this.props.name);
-  }
-
-  render() {
-    const {name, posts} = this.props;
-
-    return (
-      <div>
-        <h1>All the {name} dot-files</h1>
-        {
-          !!posts
-            ? <ul className="posts">{posts.map((post, i) => <Post key={'' + i} {...post} />)}</ul>
-            : <p>Loading...</p>
-        }
-      </div>
-    );
-  }
-}
-
-const PostPage = ({match}) => {
-  const {username, repo} = match.params;
-
-  return (
-    <div>
-      <h1>{username}&apos;s dotfiles</h1>
-      <div>
-        <h2><a href="#link-to-vimrc">.vimrc</a></h2>
-        <pre>
-{`set shell=/bin/bash
-
-set hlsearch
-set incsearch
-set showmatch
-set smartcase
-set ignorecase
-
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
-set autoindent
-set smarttab
-set expandtab`}
-        </pre>
-      </div>
-    </div>
-  );
-}
+import ListPage from './ListPage';
+import ItemPage from './ItemPage';
 
 class App extends React.Component {
   constructor(props) {
@@ -108,10 +48,12 @@ class App extends React.Component {
         </nav>
       </header>,
       <main key="main">
-        <Route exact path="/" render={props => <Page {...props} name="hot" loadPosts={this.loadPosts.bind(this)} posts={this.state.hot} />} />
-        <Route path="/new" render={props => <Page {...props} name="newest" loadPosts={this.loadPosts.bind(this)} posts={this.state.newest} />} />
-        <Route path="/random" render={props => <Page {...props} name="random" loadPosts={this.loadPosts.bind(this)} posts={this.state.random} />} />
-        <Route path="/::/:username/:repo" component={PostPage} />
+        <Switch>
+          <Route exact path="/" render={props => <ListPage {...props} name="hot" loadPosts={this.loadPosts.bind(this)} posts={this.state.hot} />} />
+          <Route path="/new" render={props => <ListPage {...props} name="newest" loadPosts={this.loadPosts.bind(this)} posts={this.state.newest} />} />
+          <Route path="/random" render={props => <ListPage {...props} name="random" loadPosts={this.loadPosts.bind(this)} posts={this.state.random} />} />
+          <Route path="/::/:username/:repo" component={ItemPage} />
+        </Switch>
       </main>,
       <footer key="footer">
         <p>Made in SF</p>
