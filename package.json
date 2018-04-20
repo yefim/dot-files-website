@@ -23,7 +23,7 @@
     "webpack-dev-server": "^3.1.1"
   },
   "scripts": {
-    "start": "webpack-dev-server --mode development --open",
+    "start": "webpack-dev-server --mode development",
     "build": "webpack --mode production && echo '/* /index.html 200' > dist/_redirects"
   },
   "repository": {
