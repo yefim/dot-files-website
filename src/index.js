@@ -7,78 +7,31 @@ import {render} from 'react-dom';
 import _ from 'lodash';
 import {Route, Switch} from 'react-router';
 import {Link} from 'react-router-dom';
-import {createStore, combineReducers, applyMiddleware} from 'redux';
+import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
 import {Provider} from 'react-redux';
 import {ConnectedRouter, routerReducer, routerMiddleware} from 'react-router-redux'
 import createHistory from 'history/createBrowserHistory';
+import thunk from 'redux-thunk';
 
 // dot-files
-import ListPage from './ListPage';
+import ListPage from './containers/ListPage';
 import ItemPage from './ItemPage';
-import reducers from './reducers';
+import reducer from './reducer';
 
 const history = createHistory();
 const middleware = routerMiddleware(history);
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 const store = createStore(
   combineReducers({
-    ...reducers,
+    app: reducer,
     router: routerReducer
   }),
-  applyMiddleware(middleware)
+  composeEnhancers(applyMiddleware(middleware, thunk))
 );
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      hot: null,
-      newest: null,
-      random: null
-    };
-  }
-
-  loadPosts(name) {
-    if (this.state[name]) {
-      return;
-    }
-
-    setTimeout(() => {
-      this.setState({
-        [name]: [
-          {
-            username: 'mathiasbynens',
-            repo: 'dotfiles',
-            stars: 18734,
-            timestamp: 567,
-            files: [
-              {name: '.vimrc', url: 'https://rawgit.com/mathiasbynens/dotfiles/master/.vimrc'}
-            ]
-          },
-          {
-            username: 'thoughtbot',
-            repo: 'dotfiles',
-            stars: 4823,
-            timestamp: 123,
-            files: [
-            ]
-          },
-          {
-            username: 'yefim',
-            repo: 'dotfiles',
-            stars: 0,
-            timestamp: 234,
-            files: [
-              {name: '.vimrc', url: 'https://rawgit.com/yefim/dotfiles/master/.vimrc'},
-              {name: '.vimrc', url: 'https://rawgit.com/mathiasbynens/dotfiles/master/.vimrc'}
-            ]
-          }
-        ]
-      });
-    }, 300);
-  }
-
   findPost({username, repo}) {
     const {hot, newest, random} = this.state;
     const posts = _.concat(hot || [], newest || [], random || []);
@@ -103,21 +56,15 @@ class App extends React.Component {
           <Route
             exact
             path="/"
-            render={(props) => {
-              return (<ListPage {...props} name="hot" loadPosts={this.loadPosts.bind(this)} posts={this.state.hot} />);
-            }}
+            render={(props) => <ListPage {...props} name="hot" />}
           />
           <Route
             path="/new"
-            render={(props) => {
-              return (<ListPage {...props} name="newest" loadPosts={this.loadPosts.bind(this)} posts={this.state.newest} />);
-            }}
+            render={(props) => <ListPage {...props} name="newest" />}
           />
           <Route
             path="/random"
-            render={(props) => {
-              return (<ListPage {...props} name="random" loadPosts={this.loadPosts.bind(this)} posts={this.state.random} />);
-            }}
+            render={(props) => <ListPage {...props} name="random" />}
           />
           <Route
             path="/::/:username/:repo"
