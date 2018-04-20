@@ -1,12 +1,32 @@
+// styles
 import './styles.css';
 
+// libraries
 import React from 'react';
-import _ from 'lodash';
 import {render} from 'react-dom';
-import {BrowserRouter, Route, Switch, Link} from 'react-router-dom'
+import _ from 'lodash';
+import {Route, Switch} from 'react-router';
+import {Link} from 'react-router-dom';
+import {createStore, combineReducers, applyMiddleware} from 'redux';
+import {Provider} from 'react-redux';
+import {ConnectedRouter, routerReducer, routerMiddleware} from 'react-router-redux'
+import createHistory from 'history/createBrowserHistory';
 
+// dot-files
 import ListPage from './ListPage';
 import ItemPage from './ItemPage';
+import reducers from './reducers';
+
+const history = createHistory();
+const middleware = routerMiddleware(history);
+
+const store = createStore(
+  combineReducers({
+    ...reducers,
+    router: routerReducer
+  }),
+  applyMiddleware(middleware)
+);
 
 class App extends React.Component {
   constructor(props) {
@@ -118,8 +138,10 @@ class App extends React.Component {
 }
 
 render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
+  <Provider store={store}>
+    <ConnectedRouter history={history}>
+      <App />
+    </ConnectedRouter>
+  </Provider>,
   document.getElementById('app')
 );
