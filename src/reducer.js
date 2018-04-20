@@ -19,6 +19,7 @@ export default function(state = initialState, action) {
       const postIds = _.map(posts, 'id');
       const normalizedPosts = _.zipObject(postIds, posts);
       return {
+        ...state,
         [name]: postIds,
         loading: false,
         posts: {
