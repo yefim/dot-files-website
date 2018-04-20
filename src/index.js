@@ -1,6 +1,7 @@
 import './styles.css';
 
 import React from 'react';
+import _ from 'lodash';
 import {render} from 'react-dom';
 import {BrowserRouter, Route, Switch, Link} from 'react-router-dom'
 
@@ -26,12 +27,42 @@ class App extends React.Component {
     setTimeout(() => {
       this.setState({
         [name]: [
-          {username: 'mathiasbynens', repo: 'dotfiles', stars: 18734, timestamp: 567},
-          {username: 'thoughtbot', repo: 'dotfiles', stars: 4823, timestamp: 123, tags: ['zshrc', 'vimrc']},
-          {username: 'yefim', repo: 'dotfiles', stars: 0, timestamp: 234, tags: ['vimrc']}
+          {
+            username: 'mathiasbynens',
+            repo: 'dotfiles',
+            stars: 18734,
+            timestamp: 567,
+            files: [
+              {name: '.vimrc', url: 'https://rawgit.com/mathiasbynens/dotfiles/master/.vimrc'}
+            ]
+          },
+          {
+            username: 'thoughtbot',
+            repo: 'dotfiles',
+            stars: 4823,
+            timestamp: 123,
+            files: [
+            ]
+          },
+          {
+            username: 'yefim',
+            repo: 'dotfiles',
+            stars: 0,
+            timestamp: 234,
+            files: [
+              {name: '.vimrc', url: 'https://rawgit.com/yefim/dotfiles/master/.vimrc'},
+              {name: '.vimrc', url: 'https://rawgit.com/mathiasbynens/dotfiles/master/.vimrc'}
+            ]
+          }
         ]
       });
     }, 300);
+  }
+
+  findPost({username, repo}) {
+    const {hot, newest, random} = this.state;
+    const posts = _.concat(hot || [], newest || [], random || []);
+    return _.find(posts, {username, repo});
   }
 
   render() {
@@ -68,7 +99,15 @@ class App extends React.Component {
               return (<ListPage {...props} name="random" loadPosts={this.loadPosts.bind(this)} posts={this.state.random} />);
             }}
           />
-          <Route path="/::/:username/:repo" component={ItemPage} />
+          <Route
+            path="/::/:username/:repo"
+            render={(props) => {
+              const post = this.findPost(props.match.params);
+
+              return (<ItemPage {...props} post={post} />
+              );
+            }}
+          />
         </Switch>
       </main>,
       <footer key="footer">

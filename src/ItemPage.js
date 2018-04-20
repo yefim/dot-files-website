@@ -1,12 +1,38 @@
 import React from 'react';
+import _ from 'lodash';
 
 export default class ItemPage extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {files: this.props.post ? this.props.post.files : null};
+  }
+
+  fetchFiles() {
+    _.each(this.props.post.files, (file, i) => {
+      fetch(file.url)
+        .then(res => res.text())
+        .then((text) => {
+          const newFile = {
+            ...file,
+            text
+          };
+
+          const newFiles = [...this.state.files];
+          newFiles[i] = newFile;
+
+          // TODO: use setState updater function or move to redux
+          this.setState({files: newFiles});
+        });
+    });
+  }
+
   componentDidMount() {
-    fetch('https://rawgit.com/mathiasbynens/dotfiles/master/.vimrc')
-      .then(res => res.text())
-      .then((text) => {
-        console.log(text);
-      });
+    if (this.props.post) {
+      this.fetchFiles();
+    } else {
+      // load the post from server
+    }
   }
 
   render() {
@@ -19,75 +45,17 @@ export default class ItemPage extends React.Component {
       }
     } = this.props;
 
+    const post = this.props.post || {username, repo};
+    const files = this.state.files;
+
     return (
       <div>
-        <h1>{username}&apos;s dotfiles</h1>
-        <div>
-          <h2><a href="#link-to-vimrc">.vimrc</a></h2>
-          <pre style={{'max-height': '400px', overflow: 'scroll'}}>
-{`" Use the Solarized Dark theme
-set background=dark
-colorscheme solarized
-let g:solarized_termtrans=1
-
-" Make Vim more useful
-set nocompatible
-" Use the OS clipboard by default
-set clipboard=unnamed
-" Enhance command-line completion
-set wildmenu
-" Allow cursor keys in insert mode
-set esckeys
-" Allow backspace in insert mode
-set backspace=indent,eol,start
-" Optimize for fast terminal connections
-set ttyfast
-" Add the g flag to search/replace by default
-set gdefault
-" Use UTF-8 without BOM
-set encoding=utf-8 nobomb
-" Change mapleader
-let mapleader=","
-" Don’t add empty newlines at the end of files
-set binary
-set noeol
-" Centralize backups, swapfiles and undo history
-set backupdir=~/.vim/backups`}
-          </pre>
-        </div>
-        <div>
-          <h2><a href="#link-to-vimrc">.bashrc</a></h2>
-          <pre style={{'max-height': '400px', overflow: 'scroll'}}>
-{`" Use the Solarized Dark theme
-set background=dark
-colorscheme solarized
-let g:solarized_termtrans=1
-
-" Make Vim more useful
-set nocompatible
-" Use the OS clipboard by default
-set clipboard=unnamed
-" Enhance command-line completion
-set wildmenu
-" Allow cursor keys in insert mode
-set esckeys
-" Allow backspace in insert mode
-set backspace=indent,eol,start
-" Optimize for fast terminal connections
-set ttyfast
-" Add the g flag to search/replace by default
-set gdefault
-" Use UTF-8 without BOM
-set encoding=utf-8 nobomb
-" Change mapleader
-let mapleader=","
-" Don’t add empty newlines at the end of files
-set binary
-set noeol
-" Centralize backups, swapfiles and undo history
-set backupdir=~/.vim/backups`}
-          </pre>
-        </div>
+        <h1>{post.username}&apos;s dotfiles</h1>
+        {
+          files
+            ? <div>{_.map(files, (file, i) => <pre key={'' + i}>{file.url}{file.text}</pre>)}</div>
+            : <p>Loading...</p>
+        }
       </div>
     );
   }
