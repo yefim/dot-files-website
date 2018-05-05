@@ -4,7 +4,6 @@ import Post from './Post';
 
 export default class ListPage extends React.Component {
   componentDidMount() {
-    console.log(`Fetching ${this.props.name} posts...`);
     this.props.fetchPosts(this.props.name);
   }
 

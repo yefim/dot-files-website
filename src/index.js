@@ -56,15 +56,15 @@ class App extends React.Component {
           <Route
             exact
             path="/"
-            render={(props) => <ListPage {...props} name="hot" />}
+            component={(props) => <ListPage {...props} name="hot" />}
           />
           <Route
             path="/new"
-            render={(props) => <ListPage {...props} name="newest" />}
+            component={(props) => <ListPage {...props} name="newest" />}
           />
           <Route
             path="/random"
-            render={(props) => <ListPage {...props} name="random" />}
+            component={(props) => <ListPage {...props} name="random" />}
           />
           <Route
             path="/::/:username/:repo"
