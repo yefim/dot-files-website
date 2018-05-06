@@ -5,7 +5,8 @@ export default class ItemPage extends React.Component {
   inflatePost() {
     const {post} = this.props;
 
-    if (_.size(post.files)) {
+    // Check id to see if post has already been fetched
+    if (post.id) {
       return Promise.resolve(post);
     }
 
