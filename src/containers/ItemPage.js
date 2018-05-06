@@ -3,7 +3,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import ItemPage from '../ItemPage';
-import {fetchFile} from '../actions';
+import {fetchPost, fetchFile} from '../actions';
 
 const mapStateToProps = ({app}, {username, repo}) => {
   const barePost = {username, repo};
@@ -13,7 +13,7 @@ const mapStateToProps = ({app}, {username, repo}) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({fetchFile}, dispatch);
+  return bindActionCreators({fetchPost, fetchFile}, dispatch);
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ItemPage);

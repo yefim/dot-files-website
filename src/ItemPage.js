@@ -3,14 +3,24 @@ import React from 'react';
 
 export default class ItemPage extends React.Component {
   inflatePost() {
-    const {post, files, fetchFile} = this.props;
+    const {post} = this.props;
+
+    if (_.size(post.files)) {
+      return Promise.resolve(post);
+    }
+
+    return this.props.fetchPost(post);
+  }
+
+  inflateFiles(post) {
+    const {files, fetchFile} = this.props;
     const filesToFetch = _.filter(post.files, (file) => !files[file.url]);
 
     _.each(filesToFetch, fetchFile);
   }
 
   componentDidMount() {
-    this.inflatePost();
+    this.inflatePost().then(this.inflateFiles.bind(this));
   }
 
   render() {

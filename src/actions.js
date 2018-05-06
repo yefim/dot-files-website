@@ -2,10 +2,11 @@
 export const POSTS_FETCH_SUCCEEDED = 'DOT_FILES/POSTS_FETCH_SUCCEEDED';
 
 // ItemPage
+export const POST_FETCH_SUCCEEDED = 'DOT_FILES/POST_FETCH_SUCCEEDED';
 export const FILE_FETCH_SUCCEEDED = 'DOT_FILES/FILE_FETCH_SUCCEEDED';
 
 export const fetchFile = ({url}) => {
-  console.log(`Fetching ${url}...`);
+  console.log(`Fetching file at ${url}...`);
   return (dispatch) => {
     return fetch(url)
       .then(res => res.text())
@@ -13,6 +14,26 @@ export const fetchFile = ({url}) => {
         dispatch({type: FILE_FETCH_SUCCEEDED, url, text});
       });
   }
+};
+
+export const fetchPost = ({username, repo}) => {
+  console.log(`Fetching ${username}'s dotfiles...`);
+  return (dispatch) => {
+    return fetch('http://httpbin.org/get')
+      .then(res => res.json())
+      .then(() => {
+        const post = {
+          id: 'ghi789',
+          files: [
+            {name: '.vimrc', url: 'https://rawgit.com/mathiasbynens/dotfiles/master/.vimrc'}
+          ],
+          username,
+          repo
+        };
+        dispatch({type: POST_FETCH_SUCCEEDED, post});
+        return post;
+      });
+  };
 };
 
 export const fetchPosts = (name) => {
@@ -48,12 +69,11 @@ export const fetchPosts = (name) => {
             stars: 0,
             timestamp: 234,
             files: [
-              {name: '.vimrc', url: 'https://rawgit.com/yefim/dotfiles/master/.vimrc'},
               {name: '.vimrc', url: 'https://rawgit.com/mathiasbynens/dotfiles/master/.vimrc'}
             ]
           }
         ]
       });
-    }, 1000);
+    }, 400);
   };
 };

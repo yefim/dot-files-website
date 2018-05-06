@@ -2,6 +2,7 @@ import _ from 'lodash';
 
 import {
   POSTS_FETCH_SUCCEEDED,
+  POST_FETCH_SUCCEEDED,
   FILE_FETCH_SUCCEEDED
 } from './actions';
 
@@ -28,7 +29,15 @@ export default function(state = initialState, action) {
         }
       };
     }
-    case FILE_FETCH_SUCCEEDED: {
+    case POST_FETCH_SUCCEEDED:
+      return {
+        ...state,
+        posts: {
+          ...state.posts,
+          [action.post.id]: action.post
+        }
+      }
+    case FILE_FETCH_SUCCEEDED:
       return {
         ...state,
         files: {
@@ -36,7 +45,6 @@ export default function(state = initialState, action) {
           [action.url]: action.text
         }
       };
-    }
     default:
       return state;
   }
