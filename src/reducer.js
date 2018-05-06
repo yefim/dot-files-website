@@ -1,12 +1,17 @@
 import _ from 'lodash';
 
-import {POSTS_FETCH_REQUESTED, POSTS_FETCH_SUCCEEDED} from './actions';
+import {
+  POSTS_FETCH_REQUESTED,
+  POSTS_FETCH_SUCCEEDED,
+  FILE_FETCH_SUCCEEDED
+} from './actions';
 
 const initialState = {
   hot: [],
   new: [],
   random: [],
   posts: {},
+  files: {},
   loading: true
 };
 
@@ -25,6 +30,15 @@ export default function(state = initialState, action) {
         posts: {
           ...state.posts,
           ...normalizedPosts
+        }
+      };
+    }
+    case FILE_FETCH_SUCCEEDED: {
+      return {
+        ...state,
+        files: {
+          ...state.files,
+          [action.url]: action.text
         }
       };
     }

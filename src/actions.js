@@ -1,6 +1,20 @@
+// ListPage
 export const POSTS_FETCH_REQUESTED = 'DOT_FILES/POSTS_FETCH_REQUESTED';
 export const POSTS_FETCH_SUCCEEDED = 'DOT_FILES/POSTS_FETCH_SUCCEEDED';
-export const POSTS_FETCH_FAILED = 'DOT_FILES/POSTS_FETCH_FAILED';
+
+// ItemPage
+export const FILE_FETCH_SUCCEEDED = 'DOT_FILES/FILE_FETCH_SUCCEEDED';
+
+export const fetchFile = ({url}) => {
+  console.log(`Fetching ${url}...`);
+  return (dispatch) => {
+    return fetch(url)
+      .then(res => res.text())
+      .then((text) => {
+        dispatch({type: FILE_FETCH_SUCCEEDED, url, text});
+      });
+  }
+};
 
 export const fetchPosts = (name) => {
   return (dispatch) => {

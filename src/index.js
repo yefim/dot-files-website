@@ -15,7 +15,7 @@ import thunk from 'redux-thunk';
 
 // dot-files
 import ListPage from './containers/ListPage';
-import ItemPage from './ItemPage';
+import ItemPage from './containers/ItemPage';
 import reducer from './reducer';
 
 const history = createHistory();
@@ -68,11 +68,10 @@ class App extends React.Component {
           />
           <Route
             path="/::/:username/:repo"
-            render={(props) => {
-              const post = this.findPost(props.match.params);
+            component={(props) => {
+              const {username, repo} = props.match.params;
 
-              return (<ItemPage {...props} post={post} />
-              );
+              return (<ItemPage {...props} username={username} repo={repo} />);
             }}
           />
         </Switch>

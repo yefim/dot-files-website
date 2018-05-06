@@ -1,59 +1,35 @@
-import React from 'react';
 import _ from 'lodash';
+import React from 'react';
 
 export default class ItemPage extends React.Component {
-  constructor(props) {
-    super(props);
+  inflatePost() {
+    const {post, files, fetchFile} = this.props;
+    const filesToFetch = _.filter(post.files, (file) => !files[file.url]);
 
-    this.state = {files: this.props.post ? this.props.post.files : null};
-  }
-
-  fetchFiles() {
-    _.each(this.props.post.files, (file, i) => {
-      fetch(file.url)
-        .then(res => res.text())
-        .then((text) => {
-          const newFile = {
-            ...file,
-            text
-          };
-
-          const newFiles = [...this.state.files];
-          newFiles[i] = newFile;
-
-          // TODO: use setState updater function or move to redux
-          this.setState({files: newFiles});
-        });
-    });
+    _.each(filesToFetch, fetchFile);
   }
 
   componentDidMount() {
-    if (this.props.post) {
-      this.fetchFiles();
-    } else {
-      // load the post from server
-    }
+    this.inflatePost();
   }
 
   render() {
-    const {
-      match: {
-        params: {
-          username,
-          repo
-        }
-      }
-    } = this.props;
-
-    const post = this.props.post || {username, repo};
-    const files = this.state.files;
+    const {post, files} = this.props;
 
     return (
       <div>
         <h1>{post.username}&apos;s dotfiles</h1>
         {
-          files
-            ? <div>{_.map(files, (file, i) => <pre key={'' + i}>{file.url}{file.text}</pre>)}</div>
+          post.files
+            ? _.map(post.files, ({url}, i) => {
+                const text = files[url];
+                return (
+                  <div key={'' + i}>
+                    <p>{url}</p>
+                    {text ? <pre>{text}</pre> : <p>Loading...</p>}
+                  </div>
+                );
+              })
             : <p>Loading...</p>
         }
       </div>
