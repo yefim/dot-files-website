@@ -19,7 +19,7 @@ export const fetchFile = ({url}) => {
 export const fetchPost = ({username, repo}) => {
   console.log(`Fetching ${username}'s dotfiles...`);
   return (dispatch) => {
-    return fetch('http://httpbin.org/get')
+    return fetch('https://httpbin.org/get')
       .then(res => res.json())
       .then(() => {
         const post = {
