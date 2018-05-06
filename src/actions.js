@@ -1,5 +1,4 @@
 // ListPage
-export const POSTS_FETCH_REQUESTED = 'DOT_FILES/POSTS_FETCH_REQUESTED';
 export const POSTS_FETCH_SUCCEEDED = 'DOT_FILES/POSTS_FETCH_SUCCEEDED';
 
 // ItemPage
@@ -18,8 +17,6 @@ export const fetchFile = ({url}) => {
 
 export const fetchPosts = (name) => {
   return (dispatch) => {
-    dispatch({type: POSTS_FETCH_REQUESTED});
-
     setTimeout(() => {
       dispatch({
         type: POSTS_FETCH_SUCCEEDED,

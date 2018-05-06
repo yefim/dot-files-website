@@ -1,7 +1,6 @@
 import _ from 'lodash';
 
 import {
-  POSTS_FETCH_REQUESTED,
   POSTS_FETCH_SUCCEEDED,
   FILE_FETCH_SUCCEEDED
 } from './actions';
@@ -11,14 +10,11 @@ const initialState = {
   new: [],
   random: [],
   posts: {},
-  files: {},
-  loading: true
+  files: {}
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case POSTS_FETCH_REQUESTED:
-      return {...state, loading: true};
     case POSTS_FETCH_SUCCEEDED: {
       const {name, posts} = action;
       const postIds = _.map(posts, 'id');
@@ -26,7 +22,6 @@ export default function(state = initialState, action) {
       return {
         ...state,
         [name]: postIds,
-        loading: false,
         posts: {
           ...state.posts,
           ...normalizedPosts

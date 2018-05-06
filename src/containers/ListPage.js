@@ -8,7 +8,7 @@ import {fetchPosts} from '../actions';
 const mapStateToProps = ({app}, ownProps) => {
   const postIds = app[ownProps.name];
   const posts = _.map(postIds, (postId) => app.posts[postId]);
-  return {posts, loading: app.loading};
+  return {posts};
 };
 
 const mapDispatchToProps = (dispatch) => {
