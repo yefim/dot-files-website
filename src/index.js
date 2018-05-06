@@ -42,7 +42,7 @@ class App extends React.Component {
     return [
       <header key="header">
         <nav>
-          <p>Dot-files</p>
+          <p><Link to="/">Dot-files</Link></p>
           <ul>
             <li><Link to="/">Hot</Link></li>
             <li><Link to="/new">New</Link></li>
