@@ -1,5 +1,5 @@
 // styles
-import './styles.css';
+import './styles.scss';
 
 // libraries
 import React from 'react';
