@@ -1,5 +1,16 @@
 @import './normalize.scss';
 
+$main-background: #022830;
+$post-background: #021c22;
+$post-border: rgba(179, 210, 209, 0.3);
+$post-vote: #b3d2d1;
+$github-link: #78ffee;
+$white: #fff;
+
+html, body {
+  background-color: $main-background;
+}
+
 nav {
   max-width: 1240px;
   margin: 0 auto;
@@ -48,34 +59,54 @@ footer {
 }
 
 .post {
+  border: 1px solid $post-border;
+  border-radius: 4px;
   display: block;
-  margin: 0 0 20px 0;
   width: 100%;
-  padding: 12px;
-  background: #eee;
+  background: $post-background;
   position: relative;
 
-  .link {
-    width: 100%;
-    display: flex;
-  }
-
-  .tag {
-    margin: 0 0 0 12px;
-    color: white;
-    background: #222;
-    padding: 0 4px;
-  }
-
-  .github-star {
-    background: #d14;
-    color: white;
-    border-radius: 4px;
-    padding: 8px 0;
-    width: 150px;
-    text-align: center;
+  .vote {
     position: absolute;
-    top: 0;
-    right: 0;
+    color: $post-vote;
+
+    button {
+      background: transparent;
+      border: 0;
+      color: inherit;
+      cursor: pointer;
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  .link {
+    display: block;
+    padding: 24px 40px;
+    width: 100%;
+  }
+
+  .name {
+    color: $white;
+    font-size: 24px;
+  }
+
+  .github {
+    position: absolute;
+    top: 24px;
+    right: 40px;
+
+    p,
+    a {
+      font-size: 12px;
+    }
+
+    p {
+      color: $white;
+    }
+
+    a {
+      color: $github-link;
+    }
   }
 }

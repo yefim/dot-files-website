@@ -2,24 +2,31 @@ import React from 'react';
 import _ from 'lodash';
 import {Link} from 'react-router-dom';
 
-export default class Post extends React.Component {
-  render() {
-    const {
-      username,
-      repo,
-      stars,
-      tags
-    } = this.props;
+const Post = (props) => {
+  const {
+    username,
+    repo,
+    stars,
+    tags,
+    votes
+  } = props;
 
-    return (
-      <li className="post">
-        <Link className="link" to={`/::/${username}/${repo}`}>
-          <span>{username}&apos;s dotfiles</span>
-          {_.map(tags, (tag, i) => <p key={`tag-${i}`} className="tag">{tag}</p>)}
-        </Link>
-        <a className="github-star" href={`https://github.com/${username}/${repo}`}>Star ({stars})</a>
-      </li>
-    );
-  }
-}
+  return (
+    <li className="post">
+      <div className="vote">
+        <button type="button" onClick={() => { console.log('up'); }}>^</button>
+        <p>{votes || 0}</p>
+        <button type="button" onClick={() => { console.log('down'); }}>v</button>
+      </div>
+      <Link className="link" to={`/::/${username}/${repo}`}>
+        <p className="name">{username}&apos;s dotfiles</p>
+      </Link>
+      <div className="github">
+        <p>{stars} stars</p>
+        <a href={`https://github.com/${username}/${repo}`}>view on GitHub</a>
+      </div>
+    </li>
+  );
+};
 
+export default Post;
