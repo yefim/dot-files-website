@@ -6,7 +6,7 @@ import React from 'react';
 import {render} from 'react-dom';
 import _ from 'lodash';
 import {Route, Switch} from 'react-router';
-import {Link} from 'react-router-dom';
+import {Link, NavLink} from 'react-router-dom';
 import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
 import {Provider} from 'react-redux';
 import {ConnectedRouter, routerReducer, routerMiddleware} from 'react-router-redux'
@@ -42,11 +42,11 @@ class App extends React.Component {
     return [
       <header key="header">
         <nav>
-          <p><Link to="/">Dot-files</Link></p>
+          <Link className="logo" to="/"><img width="117" height="25" src="" alt="Dot-files logo" /></Link>
           <ul>
-            <li><Link to="/">Hot</Link></li>
-            <li><Link to="/new">New</Link></li>
-            <li><Link to="/random">Random</Link></li>
+            <li><NavLink to="/" exact>hot</NavLink></li>
+            <li><NavLink to="/new">new</NavLink></li>
+            <li><NavLink to="/random">random</NavLink></li>
           </ul>
           <a className="new" href="https://google.com/forms" target="_blank" rel="noopener">New dot-files</a>
         </nav>

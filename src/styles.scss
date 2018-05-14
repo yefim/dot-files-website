@@ -1,6 +1,7 @@
 @import './normalize.scss';
 
 $main-background: #022830;
+$active-nav: #51afa3;
 $post-background: #021c22;
 $post-border: rgba(179, 210, 209, 0.3);
 $post-vote: #b3d2d1;
@@ -15,16 +16,16 @@ html, body {
   background-color: $main-background;
 }
 
+header {
+  margin-top: 40px;
+}
+
 nav {
   max-width: 1240px;
   margin: 0 auto;
   padding: 20px;
   display: flex;
   align-items: center;
-
-  p {
-    font-size: 32px;
-  }
 
   ul {
     list-style: none;
@@ -35,6 +36,15 @@ nav {
 
   li {
     margin: 0 0 0 20px;
+  }
+
+  a {
+    color: $white;
+    font-size: 16px;
+  }
+
+  .active {
+    color: $active-nav;
   }
 
   .new {
