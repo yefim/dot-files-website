@@ -6,9 +6,8 @@ import ListPage from '../ListPage';
 import {fetchPosts} from '../actions';
 
 const mapStateToProps = ({app}, ownProps) => {
-  const postIds = app[ownProps.name];
-  const posts = _.map(postIds, (postId) => app.posts[postId]);
-  return {posts};
+  const ids = app[ownProps.name];
+  return {ids};
 };
 
 const mapDispatchToProps = (dispatch) => {

@@ -4,19 +4,21 @@ import {Link} from 'react-router-dom';
 
 const Post = (props) => {
   const {
+    id,
     username,
     repo,
     stars,
     tags,
-    votes
+    score,
+    upvoted,
+    upvote
   } = props;
 
   return (
     <li className="post">
       <div className="vote">
-        <button type="button" onClick={() => { console.log('up'); }}>^</button>
-        <p>{votes || 0}</p>
-        <button type="button" onClick={() => { console.log('down'); }}>v</button>
+        <button disabled={!!upvoted} type="button" onClick={upvote.bind(this, id)}>^</button>
+        <p>{score || 0}</p>
       </div>
       <Link className="link" to={`/::/${username}/${repo}`}>
         <p className="name">{username}&apos;s dotfiles</p>

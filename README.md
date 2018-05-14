@@ -14,6 +14,7 @@ Dot-files
       username: 'yefim',
       repo: 'dotfiles',
       stars: 2,
+      score: 97,
       timestamp: 123,
       files: [
         {

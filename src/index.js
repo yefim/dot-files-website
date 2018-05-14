@@ -32,12 +32,6 @@ const store = createStore(
 );
 
 class App extends React.Component {
-  findPost({username, repo}) {
-    const {hot, newest, random} = this.state;
-    const posts = _.concat(hot || [], newest || [], random || []);
-    return _.find(posts, {username, repo});
-  }
-
   render() {
     return [
       <header key="header">
