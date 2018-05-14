@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 export default class ItemPage extends React.Component {
   inflatePost() {
@@ -29,14 +30,15 @@ export default class ItemPage extends React.Component {
 
     return (
       <div>
+        <Link to="/">&lt;- back to list</Link>
         <h1>{post.username}&apos;s dotfiles</h1>
         {
           post.files
-            ? _.map(post.files, ({url}, i) => {
+            ? _.map(post.files, ({name, url}, i) => {
                 const text = files[url];
                 return (
-                  <div key={'' + i}>
-                    <p>{url}</p>
+                  <div key={'' + i} className="file">
+                    <h2>{name}</h2>
                     {text ? <pre>{text}</pre> : <p>Loading...</p>}
                   </div>
                 );

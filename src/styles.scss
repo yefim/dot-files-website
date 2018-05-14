@@ -79,6 +79,7 @@ footer {
   width: 100%;
   background: $post-background;
   position: relative;
+  margin-bottom: 24px;
 
   .vote {
     position: absolute;
@@ -128,5 +129,23 @@ footer {
     a {
       color: $github-link;
     }
+  }
+}
+
+.file {
+  background: $post-background;
+  border: 1px solid $post-border;
+  border-radius: 4px;
+  padding: 24px 40px;
+
+  h2 {
+    color: $white;
+    font-size: 32px;
+  }
+
+  pre {
+    color: $white;
+    max-height: 460px;
+    overflow: auto;
   }
 }
