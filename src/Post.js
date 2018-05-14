@@ -20,6 +20,8 @@ const Post = (props) => {
       </div>
       <Link className="link" to={`/::/${username}/${repo}`}>
         <p className="name">{username}&apos;s dotfiles</p>
+        <div className="tags">
+        </div>
       </Link>
       <div className="github">
         <p>{stars} stars</p>

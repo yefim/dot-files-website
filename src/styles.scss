@@ -7,6 +7,10 @@ $post-vote: #b3d2d1;
 $github-link: #78ffee;
 $white: #fff;
 
+body {
+  font-family: 'Lato', sans-serif;
+}
+
 html, body {
   background-color: $main-background;
 }
@@ -69,6 +73,8 @@ footer {
   .vote {
     position: absolute;
     color: $post-vote;
+    top: 24px;
+    left: 40px;
 
     button {
       background: transparent;
@@ -82,13 +88,17 @@ footer {
 
   .link {
     display: block;
-    padding: 24px 40px;
+    padding: 28px 0 28px 116px;
     width: 100%;
   }
 
   .name {
     color: $white;
     font-size: 24px;
+  }
+
+  .tags {
+    height: 24px;
   }
 
   .github {
